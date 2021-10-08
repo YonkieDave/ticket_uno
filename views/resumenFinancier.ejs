@@ -1,0 +1,45 @@
+<%- include('headers/presupuestosAdmin'); %>
+
+  <div class="container-fluid">
+    <% if(login){ %>
+    <table class="table table-responsive table-hover">
+      <thead>
+        <a href="/registerBudget" class="btn btn-outline-info" style="position:relative; left: 1000px;">Agregar Presupuesto</a>
+        <tr>
+          <th scope="col">VENTAS</th>
+          <th scope="col">COSTOS</th>
+          <th scope="col">MARGEN</th>
+          <th scope="col">PORCENTAJE</th>
+          
+
+        </tr>
+      </thead>
+      <tbody>
+        <%
+          for(let i = 0; i < response[0].length; i++) { 
+             %>
+             <tr>
+        <td><%= response[0][i].budget_id%></td>
+        <td><%= response[0][i].create_date %></td>
+        <td><%= response[0][i].project %></td>
+        <td><%= response[0][i].version%></td>
+        
+          
+          <td>
+            <a href="/editBudget/'<%= response[0][i].budget_id%>'" class="btn btn-outline-info">Editar</a>
+            <a href="/deleteBudget" class="btn btn-outline-danger btn-borrar">Borrar</a>
+          </td>
+                    <td>
+                    <a href="#" class="btn btn-outline-info">debes ser admin para estas opciones</a>
+                    </td>
+          
+        </tr>
+      <% }%>
+      </tbody>
+    </table>
+    <% }else{ %>
+      <h3 class="display-3" style="position: fixed;">Inicia sesión para ver la tabla de presupuestos</h3>
+      <% }%>
+  </div>
+  
+</body>

@@ -1,0 +1,133 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/script.js"></script>
+  
+
+<body class="bg-secondary  row justify-content-md-center ">
+  <div class="card  row justify-content-md-center" >
+       
+    <div class="container-fluid">
+        <main>
+            <div class="py-5 text-center">
+                <!--<img class="d-block mx-auto mb-4" src="./assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+               -->
+                <h2>Registra un nuevo presupuesto</h2>
+            </div>
+    </div>
+    <div class="col-lg-auto ">
+        <h4 class="md-6">Resumen financiero</h4>
+        <form class="needs-validation col-lg-auto" id="formNewBudget" novalidate>
+            <!-- RESUMEN FINANCIERO -->
+            
+            <div class="flex-xl-row-reverse">
+                <table class="table" >
+                    <thead>
+                      <tr>
+                        <th scope="col" style="text-align: center;">VENTAS</th>
+                        <th scope="col" style="text-align: center;">COSTOS</th>
+                        <th scope="col" style="text-align: center;">MARGEN</th>
+                        <th scope="col" style="text-align: center;">PORCENTAJE</th>
+                      </tr>
+                      
+                    </thead>
+                    <tbody>
+            
+                           <tr>
+                            
+                            <td style="text-align: center;">2000</td>
+                            <td style="text-align: center;">1500</td>
+                            <td style="text-align: center;">500</td>
+                            <td style="text-align: center;">20</td>
+                            <td style="text-align: center;"></td>
+                        
+                      </tr>
+                    </tbody>
+                  </table>
+                
+            </div>
+            <BR>
+            <BR>
+            <!-- FLUJO DE EFECTIVO -->
+            <h4 class="md-6 flex-xl-row-reverse">Flujo de efectivo</h4>
+            <div class="flex-xl-row-reverse">
+              
+                <table class="table flex-xl-wrap" id="flow_table">
+                    <thead>
+                      <tr>
+                        <th scope="col" style="align-items: center;">MES</th>
+                        <th scope="col" style="align-items: center;">INGRESOS</th>
+                        <th scope="col" style="align-items: center;">EGRESOS</th>
+                        <th scope="col" style="align-items: center;">TOTAL</th>
+                        <th scope="col" style="align-items: center;">ACUMULADO</th>
+                        <th scope="col" style="align-items: center;">ACCIONES</th>
+                      </tr>
+                      
+                    </thead>
+                    <tbody>
+                      
+                      <tr>
+                        
+                        <td style="text-align: center;"><select id="fecha_flow" name="month" required>
+                          
+                          <option>Enero</option>
+                          <option>Febrero</option>
+                          <option>Marzo</option>
+                          <option>Abril</option>
+                          <option>Mayo</option>
+                          <option>Junio</option>
+                          <option>Julio</option>
+                          <option>Agosto</option>
+                          <option>Septiembre</option>
+                          <option>Octubre</option>
+                          <option>Noviembre</option>
+                          <option>Diciembre</option>
+                        </select></td>
+                        
+                        <td style="text-align: center;"><input required type="number" id="ingreso_flow" step='0.01' placeholder="Ingreso"></td>
+                        <td style="text-align: center;"><input required type="number" id="egreso_flow" step='0.01' placeholder="Egreso"></td>
+                       <!-- <td style="text-align: center;"><input type="number"  disabled placeholder="TOTAL"></td>
+                        <td style="text-align: center;"><input type="number"  disabled placeholder="Acumulado"></td>-->
+                        <td style="text-align: center;">
+                            <button type="button" id="add_flow" class="btn btn-outline-info">Agregar</button>
+                        <!--<a href="/deleteFlow" class="btn btn-outline-danger btn-borrar">Borrar</a>-->
+                        </td>
+                        
+                        <div id="adicionados"></div>
+                      </tr>
+                    </tbody>
+                  </table>
+                
+            </div>
+
+
+            <hr class="my-4">
+
+
+            <a class="w-100 btn btn-primary btn-lg" type="submit" onclick="createBudget();">Agregar</a>
+        </form>
+    </div>
+    </div>
+</div>
+</div>
+    </main>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+   
+</body>
+<% if(typeof alert != "undefined"){ %>
+    <script>
+       Swal.fire({
+          title: '<%= alertTitle %>',
+          text: '<%= alertMessage %>',
+          icon: '<%= alertIcon%>',
+          showConfirmButton: '<%= showConfirmButton%>',
+          timer: '<%= timer %>'
+       }).then(()=>{
+          window.location = '/<%= ruta %>'
+       })
+    </script>
+ <% }
+ %>
+
+</html>

@@ -1,0 +1,30 @@
+<%- include('headers/presupuestosAdmin'); %>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="row g-3">
+    <form action="/editBudget" method="POST">
+        
+        <input id="id" name="id" value="<%= results[0][0].budget_id %>" hidden>
+        <div class="col">
+        <input type="text" id='project' name="project" class="form-control" placeholder="Proyecto" aria-label="Proyecto">
+        </div>
+        <div class="col">
+        <input type="text" id="version" name="version" class="form-control" placeholder="Versión" aria-label="Version">
+        </div>
+        <input type="submit" >
+    </form>
+  </div>
+  <% if(typeof alert != "undefined"){ %>
+    <script>
+       Swal.fire({
+          title: '<%= alertTitle %>',
+          text: '<%= alertMessage %>',
+          icon: '<%= alertIcon%>',
+          showConfirmButton: '<%= showConfirmButton%>',
+          timer: '<%= timer %>'
+       }).then(()=>{
+          window.location = '/<%= ruta %>'
+       })
+    </script>
+ <% }
+ %>

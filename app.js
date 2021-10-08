@@ -1,18 +1,31 @@
 const express = require('express');
+const bcryptjs = require('bcryptjs');
 const app = express();
+const cookieParser = require('cookie-parser');
+const  ejsLint  =  require ( 'ejs-lint' ) ;
 require('dotenv').config();
+
+const session = require('express-session');
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}))
 
 const sequelize = require('./db/conection');
 const loginView = require('./app/views/login');
-const indexView = require('./app/views/index');
+const budgetView = require('./app/views/budget');
 
-
-
+//urlencode captura los datos del formulario
+app.use(express.urlencoded({extended:true}));
 app.use(express.json())
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
+
+//cookie
+app.use(cookieParser);
 
 async function serverStart() {
     try {
@@ -29,4 +42,4 @@ async function serverStart() {
   serverStart();
   
   loginView(app);
-  indexView(app);
+  budgetView(app);

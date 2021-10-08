@@ -1,42 +1,29 @@
 const sequelize = require('../../db/conection');
+const login = require('../views/login');
 
 
 module.exports.userExist = async (usr) => {
-    let user = [usr.user, usr.password]
-    console.log(user);
-    try {
-        let result = await sequelize.query(`SELECT * FROM users WHERE user_id = '${user[0]}'`);
-        if (result) {
-            let verify = await sequelize.query(`SELECT * FROM users WHERE pass = '${user[1]}'`);
-            if (verify) {
-                return true
-            } else {
-                return false
-            }
-        } else {
-            return false
-        }
-    } catch (err) {
-        throw new Error(err)
+    
+     let result = await sequelize.query(`SELECT * FROM users WHERE user_name = '${usr.user}' AND user_pass = '${usr.pass}'`);
+     //console.log(`resultado --->  ${JSON.stringify(result[0][0].rol)}   Logitud ${result[0].length}`)   
+     if (result[0].length == 0) {
+           return false;
+        }else{
+            let  resp = [JSON.stringify(result[0][0].user_name),JSON.stringify(result[0][0].rol)]; 
+           return (true, resp );
+        
     }
 }
 
 module.exports.users = async () => {
     try {
-        let result = await sequelize.query('SELECT * FROM usuarios')
+        let result = await sequelize.query('SELECT * FROM users')
         return result
     } catch (err) {
         throw new Error(err)
     }
 }
-module.exports.usersTable = async () => {
-    try {
-        let result = await sequelize.query('SELECT id_cliente, correo, contraseña, rol FROM usuarios')
-        return result
-    } catch (err) {
-        throw new Error(err)
-    }
-}
+
 
 module.exports.usersUpdate = async () => {
     try {

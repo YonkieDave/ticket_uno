@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket 1</title>
+    
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+  </head>
+  <body>
+
+    <input type="checkbox" id="check">
+    <!--header area start-->
+    <header>
+      <label for="check">
+        <i class="fas fa-bars" id="sidebar_btn"></i>
+      </label>
+      <div  id="left_area">
+        <h3>Dash <span>Presupuestos</span></h3>
+      </div>
+      <div class="right_area" >
+        <% if(login){ %>
+            <a href="logout" class="logout_btn" >Salir</a>
+            <% }else{ %>
+            <a href="login" class="logout_btn" >Login </a>
+            <%}%>
+      </div>
+      
+    </header>
+    <!--header area end-->
+    <!--mobile navigation bar start-->
+    <div class="mobile_nav" >
+      <div class="nav_bar">
+              </div>
+      <div class="mobile_nav_items">
+        <a href="#"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
+        <a href="#"><i class="fas fa-cogs"></i><span>Components</span></a>
+        <a href="#"><i class="fas fa-table"></i><span>Tables</span></a>
+        <a href="#"><i class="fas fa-th"></i><span>Forms</span></a>
+        <a href="#"><i class="fas fa-info-circle"></i><span>About</span></a>
+        <a href="#"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+      </div>
+    </div>
+    <!--mobile navigation bar end-->
+    <!--sidebar start-->
+    <div class="sidebar">
+      <div class="profile_info">
+        <h4>Hola <% if(login){ %>
+            <strong><%= name %></strong>
+          <% }else{ %>
+            <strong><%= name %></strong>
+            <%}%>
+        </li>
+      </div>
+      <a href="/budgets"><i class="fas fa-desktop"></i><span>Presupuestos</span></a>
+      <a href="#"><i class="fas fa-cogs"></i><span>Components</span></a>
+      <a href="#"><i class="fas fa-table"></i><span>Tables</span></a>
+      <a href="#"><i class="fas fa-th"></i><span>Forms</span></a>
+      <a href="#"><i class="fas fa-info-circle"></i><span>About</span></a>
+      <a href="#"><i class="fas fa-sliders-h"></i><span>Settings</span></a>
+    </div>
+    <!--sidebar end-->
+
+    <div class="content">
+        <div class="card">
+            <% if(login){ %>
+            <table id="budget_table">
+              <thead class="header">
+                <a href="/registerBudget" class="btn btn-outline-info" style="position:relative; left: 1000px;">Agregar Presupuesto</a>
+                <tr>
+                  <th class="title" scope="col">ID PRESUPUESTO</th>
+                  <th class="title" scope="col">FECHA DE CREACIÓN</th>
+                  <th class="title" scope="col">PROYECTO</th>
+                  <th class="title" scope="col">VERSIONES</th>
+                  <th class="title" scope="col">ACCIONES</th>
+        
+                </tr>
+              </thead>
+              <tbody>
+                <%
+                  for(let i = 0; i < response[0].length; i++) { 
+                     %>
+                     <tr>
+                <td class="td_body"><%= response[0][i].budget_id %></td>
+                <td class="td_body"><%= response[0][i].create_date %></td>
+                <td class="td_body"><%= response[0][i].project %></td>
+                <td class="td_body"><%= response[0][i].version%></td>
+                
+                  
+                  <td class="td_body">
+                    <a href="/editBudget/'<%= response[0][i].budget_id%>'" class="btn btn-outline-info">Editar</a>
+                    <a href="/deleteBudget" class="btn btn-outline-danger btn-borrar">Borrar</a>
+                  </td>
+                  
+                </tr>
+              <% }%>
+              </tbody>
+            </table>
+            <% }else{ %>
+              <h3 class="display-3" style="position: fixed;">Inicia sesión para ver la tabla de presupuestos</h3>
+              <% }%>
+          </div>
+          
+        </body>
+    </div>
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $('.nav_btn').click(function(){
+        $('.mobile_nav_items').toggleClass('active');
+      });
+    });
+    </script>
+
+  </body>
+</html>
+      

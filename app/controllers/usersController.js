@@ -1,5 +1,7 @@
-const userDB = require('../app/model/userModel');
+const userDB = require('../models/userModel');
 const jwt = require('jsonwebtoken');
+const {promisify} = require('util');
+
 
 
 module.exports.tokenGeneration = async (data) => {
@@ -27,41 +29,15 @@ module.exports.userList = async () => {
     }
 }
 
-module.exports.userCreator = async (user) => {
-    let newUser = {
-        name: user.name,
-        lastname1: user.lastname1,
-        lastname2: user.lastname2,
-        email: user.email,
-        address: user.address,
-        phone: user.phone,
-        password: user.password,
-        rol: user.rol,
-    }
-    try {
-        console.log(newUser)
-        let result = await userDB.newUser(newUser)
-
-        if (result) {
-            
-            return 'succes';
-        } else {
-
-            throw new Error('User already exists')
-        }
-
-    } catch (err) {
-        throw new Error('User creation error')
-    }
-}
-
 module.exports.userValidate = async (usr) => {
     try {
         let result = await userDB.userExist(usr)
         if (result) {
-            return result
+
+            console.log("Resultado devuelto login correcto ",result);
+            return result;
         } else {
-            throw new Error('User does not exist')
+            throw new Error('User does not exist');
         }
     } catch (err) {
         throw new Error(err)

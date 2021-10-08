@@ -2,52 +2,44 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="/css/login.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!------ Include the above in your HEAD tag ---------->
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
 
 <div class="sidenav">
          <div class="login-main-text">
-            <h2>Application<br> Login Page</h2>
-            <p>Login or register from here to access.</p>
+            <h2>Ticket 1<br> Login </h2>
+            <p>Acceso a usuarios.</p>
          </div>
       </div>
       <div class="main">
          <div class="col-md-6 col-sm-12">
             <div class="login-form">
-               <form>
+               <form action="/login" method="POST">
                   <div class="form-group">
                      <label>User Name</label>
-                     <input type="text" class="form-control" placeholder="User Name">
+                     <input type="text" name="user" id="user" class="form-control" placeholder="User" required>
                   </div>
                   <div class="form-group">
                      <label>Password</label>
-                     <input type="password" class="form-control" placeholder="Password">
+                     <input type="password" name="pass" id="pass" class="form-control" placeholder="Password" required>
                   </div>
-                  <button type="submit" class="btn btn-black">Login</button>
-                  <button type="submit" class="btn btn-secondary">Register</button>
+                  <button type="submit" value="login" class="btn btn-black">Login</button>
+                  <!--<button type="submit" class="btn btn-secondary">Register</button>-->
                </form>
             </div>
          </div>
       </div>
+      <% if(typeof alert != "undefined"){ %>
+         <script>
+            Swal.fire({
+               title: '<%= alertTitle %>',
+               text: '<%= alertMessage %>',
+               icon: '<%= alertIcon%>',
+               showConfirmButton: '<%= showConfirmButton%>',
+               timer: '<%= timer %>'
+            }).then(()=>{
+               window.location = '/<%= ruta %>'
+            })
+         </script>
+      <% }
+      %>

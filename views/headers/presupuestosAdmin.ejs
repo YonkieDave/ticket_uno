@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<body>
+  
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Ticket 1</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link btn btn-sm btn-outline-secondary" href="/presupuestos">Presupuestos <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn-outline-secondary" href="#">Resumen Financiero<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn-outline-secondary" href="#">Flujo de efectivo<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link btn-outline-secondary" href="#">Estado de resultados<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn-outline-secondary" href="#">Ingresos<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn-outline-secondary" href="#">Costos directos<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" style="position: fixed; left: 900px;">Hola <% if(login){ %>
+              <strong style="position:fixed; left: 950px;"><%= name %></strong>
+              <a href="logout" class="nav-link btn-outline-secondary" style="position: fixed; left: 1200px;">Salir</a>
+            <% }else{ %>
+              <strong style="position:fixed; left: 950px;"><%= name %></strong>
+              <a href="login" class="nav-link btn-outline-secondary" style="position: fixed; left: 1200px;">Loguearse</a>
+              <% }%>
+          </li>
+              
+      </ul>
+    </div>
+  </nav>
