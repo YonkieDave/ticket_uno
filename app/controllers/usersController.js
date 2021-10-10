@@ -25,3 +25,16 @@ module.exports.userValidate = async (usr) => {
         throw new Error(err)
     }
 }
+
+module.exports.resetPass = async (usr) => {
+    try {
+        let result = await userDB.resetPass(usr)
+        if (result.length > 0) {
+            return result;
+        } else {
+            throw new Error('Algo salió mal durante la actualización');
+        }
+    } catch (err) {
+        throw new Error(err)
+    }
+}

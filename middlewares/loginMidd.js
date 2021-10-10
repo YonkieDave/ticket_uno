@@ -54,3 +54,45 @@ module.exports.logout = (req, res) =>{
     res.clearCookie('session_jwt');
     return res.redirect('/login');
 }
+
+module.exports.validateUserReset = async (req, res, next) => {
+    console.log("Datos del usuario ", req.body);
+    try {
+        if(req.body.userReset != '' && req.body.newPass != ''){
+            let result = await dbUser.validateUserResetPass(req.body.userReset);
+            console.log("Tameño de la respuesta ", result[0].length );
+            if(result[0].length > 0){
+                return next();
+            }else{
+                return(res.render('./resetPass',{
+                    alert:true,
+                    alertTitle: "Advertencia",
+                    alertMessage: "El usuario no existe en la Base de datos",
+                    alertIcon: 'info',
+                    showConfirmButton:true,
+                    timer: '',
+                    ruta: 'resetPass'
+    
+                })
+                )
+            }
+            
+        }else{
+                return(res.render('./resetPass',{
+                    alert:true,
+                    alertTitle: "Advertencia",
+                    alertMessage: "Ingrese ambos campos por favor (usuario y password)",
+                    alertIcon: 'info',
+                    showConfirmButton:true,
+                    timer: '',
+                    ruta: 'resetPass'
+    
+                })
+            )
+        }
+            
+    } catch (error) {
+     return error;   
+    }
+}
+    

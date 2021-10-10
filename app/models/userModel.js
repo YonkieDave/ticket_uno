@@ -53,3 +53,26 @@ module.exports.userAuth = async (usr) => {
         throw new Error(err)
     }
 }
+
+module.exports.validateUserResetPass = async (usr) => {
+
+    try {
+        let result = await sequelize.query(`SELECT * FROM users WHERE user_name = '${usr}' `)
+        console.log("Resultado búsqueda de usuario ", result);
+        return result;
+    } catch (err) {
+        throw new Error(err)
+    }
+}
+
+module.exports.resetPass = async (usr) => {
+
+    try {
+        let result = await sequelize.query(`UPDATE users SET user_pass = '${usr.newPass}' WHERE user_name = '${usr.userReset}'`); 
+        console.log( "Resultado del UPDATE ----> ",result )
+        return result;
+    } catch (err) {
+        throw new Error(err)
+    }
+}
+

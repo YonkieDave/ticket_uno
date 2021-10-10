@@ -55,6 +55,43 @@ module.exports = (app) => {
 
 app.get('/logout', middLogin.logout);
 
+app.get('/resetPass', async (req, res) => {
+    res.render('resetPass');
+});
+
+
+app.post('/resetPass',  middLogin.validateUserReset, async (req, res) => {
+    try {
+     
+    let result = await userController.resetPass(req.body);
+    if (result.length > 0) {
+        res.render('resetPass',{
+            alert:true,
+            alertTitle: "Actualizada ",
+            alertIcon: "succes",
+            alertMessage: "Contraseña Actualizada",
+            showConfirmButton: false,
+            timer: 1000,
+            ruta:'login',
+         }); 
+    }else{
+        res.render('resetPass',{
+            alert:true,
+            alertTitle: "Error ",
+            alertIcon: "error",
+            alertMessage: "Error al actualizar, favor de volver a intentar verificando su nombre de usuario",
+            showConfirmButton: false,
+            timer: '',
+            ruta:'resetPass',
+         });
+    }   
+    } catch (error) {
+        
+    }
+
+});
+
 }
+
 
 
