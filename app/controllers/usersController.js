@@ -1,24 +1,6 @@
 const userDB = require('../models/userModel');
 const jwt = require('jsonwebtoken');
-const {promisify} = require('util');
 
-
-
-module.exports.tokenGeneration = async (data) => {
-    console.log("generación del token ", data);
-    const result = jwt.sign({ data }, process.env.SECRET_KEY);
-    console.log("Token generado", result);
-    return result
-}
-
-module.exports.userVerify = async (token) => {
-    const result = jwt.verify(token, process.env.SECRET_KEY)
-    if (result) {
-        return result
-    } else {
-        throw new Error('Invalid Token')
-    }
-}
 
 module.exports.userList = async () => {
     try {

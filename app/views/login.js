@@ -1,71 +1,60 @@
 const sequelize = require('../../db/conection');
-const cors = require('cors');
 const userController = require('../controllers/usersController');
 const middLogin = require('../../middlewares/loginMidd');
+const jwt = require('jsonwebtoken');
 
 module.exports = (app) => {
 
     app.get('/login', async (req, res) => {
         res.render('login');
     });
+    
+    app.post('/login', middLogin.validateUserLogin, async (req, res) =>{
+        console.log("dentro del post de login", req.body);
+        try {
+        let result = await userController.userValidate(req.body);
+        console.log("Resultado en la vista de login --> ", result[0],result[1],result[2]);
+        let id = result[0];
+        const token = jwt.sign({id:id}, process.env.SECRET_KEY, {
+            expiresIn: process.env.EXP_TOKEN
+        });
+        console.log("Token generado ", token);
 
-
-    app.post('/auth', async (req, res) => {
-        //console.log("Este es el usuario qwue quiere autenticarse",  req.body);
-        //let user = req.body;
-        //console.log(`Este es el usuario qwue quiere autenticarse  ${user}`);
-        try {            
-            if(req.body.user && req.body.pass){
-                let result = await userController.userValidate(req.body);
-                console.log("Resultado en la vista de login --> ", result[0],result[1]) 
-                
-                    req.session.loggedin = true;
-                    req.session.name = result[0];
-                    req.session.rol = result[1];
-                    res.render('login',{
-                    alert:true,
-                    alertTitle: "Logueo exitoso",
-                    alertMessage: "Usuario Logueado",
-                    alertIcon: "succes",
-                    showConfirmButton: false,
-                    timer: 2000,
-                    ruta:'budgets',
-            });   
-        }else{
+        const cookiesOptions = {
+            expires: new Date(Date.now()+process.env.EXP_COOKIE * 24 * 60 * 60 * 1000),
+            httpOnly: true
+        };
+        res.cookie('session_jwt', token, cookiesOptions);
+            
+         res.render('login',{
+            alert:true,
+            alertTitle: "Logueado ",
+            alertIcon: "succes",
+            alertMessage: "Usuario Logueado con exito",
+            showConfirmButton: false,
+            timer: 1000,
+            ruta:'budgets',
+         }); 
+        } catch (error) {
             res.render('login',{
-                alert: true,
-                alertTitle: "Error",
-                alertMessage: "Ambos campos son requeridos, favor de validar",
+                alert:true,
+                alertTitle: "Error ",
                 alertIcon: "error",
+                alertMessage: "uSUARIO Y/ O PASWORD INCORRECTOS, FAVOR DE VERIFICAR",
                 showConfirmButton: true,
                 timer: '',
-                ruta:'login'
-            });
+                ruta:'login',
+        });
+    }
+ });
 
-        }
-    } catch (err) {
-            res.render('login',{
-                alert: true,
-                alertTitle: "Error",
-                alertMessage: "Usuario y/o contraseña incorrectos",
-                alertIcon: "error",
-                showConfirmButton: true,
-                timer: '',
-                ruta:'login'
-            });
-        }
-    });
 
-    app.get('/logout',(req, res) =>{
-        req.session.destroy(()=>{
-            res.redirect('/login');
-        })
-    });
+ app.get('/login', async (req, res) => {
+    res.render('login');
+});
 
-    app.post('/login', async (req, res) =>{
-        console.log("dentro del post de login");
-    });
-
+app.get('/logout', middLogin.logout);
 
 }
+
 

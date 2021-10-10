@@ -9,7 +9,7 @@ module.exports.userExist = async (usr) => {
      if (result[0].length == 0) {
            return false;
         }else{
-            let  resp = [JSON.stringify(result[0][0].user_name),JSON.stringify(result[0][0].rol)]; 
+            let  resp = [JSON.stringify(result[0][0].user_id), JSON.stringify(result[0][0].user_name),JSON.stringify(result[0][0].rol)]; 
            return (true, resp );
         
     }
@@ -37,6 +37,17 @@ module.exports.usersUpdate = async () => {
 module.exports.usersDelete = async (usr) => {
     try {
         let result = await sequelize.query(`DELETE FROM usuarios WHERE correo = '${usr.correo}' `)
+        return result
+    } catch (err) {
+        throw new Error(err)
+    }
+}
+
+
+module.exports.userAuth = async (usr) => {
+
+    try {
+        let result = await sequelize.query(`SELECT * FROM users WHERE user_id = '${usr.id}' `)
         return result
     } catch (err) {
         throw new Error(err)

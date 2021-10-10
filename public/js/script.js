@@ -1,3 +1,38 @@
+
+const login = async () => {
+  let user = document.getElementById('user').value;
+  let pass = document.getElementById('pass').value;
+  let data = {
+     user: user ,
+     pass: pass
+  };
+
+    console.log("User pal fetch", data);
+    try {
+      result = await fetch('http://localhost:3000/login', {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "content-type": "application/json"
+        }
+      })
+      .then(response =>  Swal.fire({
+        title: 'Logueado',
+        text: 'Loguin con exito',
+        icon: 'succes',
+        showConfirmButton: false,
+        timer: '1000'
+     }).then(()=>{
+        window.location = '/budgets'
+     })
+     )
+      console.log("Resultado del fetch ", result);
+          } catch (error) {
+      return alert("Error desconocido");
+    }
+       
+  }
+
 const createBudget = async () =>{
     let newBudget={};
     $('input').each(function() {

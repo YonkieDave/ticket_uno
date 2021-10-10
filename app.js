@@ -1,17 +1,17 @@
 const express = require('express');
-const bcryptjs = require('bcryptjs');
-const app = express();
 const cookieParser = require('cookie-parser');
+const app = express();
+//const cookieParser = require('cookie-parser');
 const  ejsLint  =  require ( 'ejs-lint' ) ;
 require('dotenv').config();
-
+/*
 const session = require('express-session');
 app.use(session({
   secret: 'secret',
   resave: true,
   saveUninitialized: true
 }))
-
+*/
 const sequelize = require('./db/conection');
 const loginView = require('./app/views/login');
 const budgetView = require('./app/views/budget');
@@ -25,7 +25,7 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
 //cookie
-app.use(cookieParser);
+app.use(cookieParser());
 
 async function serverStart() {
     try {

@@ -1,31 +1,21 @@
 const sequelize = require('../../db/conection');
-const cors = require('cors');
 const budgetController = require('../controllers/budgetController');
-//const midd = require('../../middlewares/');
+const loginMidd = require('../../middlewares/loginMidd');
 
 module.exports = (app) => {
 
-    app.get('/budgets', async (req, res) => {
-        if (req.session.loggedin) {
+    app.get('/budgets', loginMidd.userAuth, async (req, res) => {
+        
             try {
                 let response = await budgetController.getBudgetTable();
                 //console.log("RESULTADO CONSULTA ", response);
                 res.render('budgets',{
-                    login: true,
-                    name: req.session.name,
-                    rol: req.session.rol,
                     response:response
                 }); 
             } catch (err) {
                 res.status(400).send('An unexpected error occurred')
             }
-        }else{
-            res.render('budgets', {
-                login: false,
-                name:'Es necesario iniciar sesión'
-            })
-
-        }
+       
     });
     app.post('/addBudget', async (req, res) => {
         console.log(req.body);
@@ -34,9 +24,6 @@ module.exports = (app) => {
                 //console.log("RESULTADO CONSULTA ", response);
                 
                 res.render('presupuestos',{
-                    login: true,
-                    name: req.session.name,
-                    rol: req.session.rol,
                     alert: true,
                     alertTitle: "Agregado",
                     alertMessage: "El presupuesto se ha agregado con exito",
@@ -49,9 +36,6 @@ module.exports = (app) => {
                 return true; 
             } catch (err) {
                 res.render('presupuestos',{
-                    login: true,
-                    name: req.session.name,
-                    rol: req.session.rol,
                     alert: true,
                     alertTitle: "Ooops !!",
                     alertMessage: "No ha sido posible agregar el presupuesto",
@@ -61,18 +45,15 @@ module.exports = (app) => {
                     ruta:'presupuestos'
                 });
             }
-    })
+    });
     app.get('/editBudget/:id',async (req, res)=>{
         let id = req.params.id;
         result = await budgetController.getUpdate(id);
         //console.log("Results para la vista editar ---> ", result)
         
-        res.render('editBudget',{results:result,
-            login: true,
-            name: req.session.name,
-            rol: req.session.rol,
-        });
+        res.render('editBudget',{results:result});
     });
+
     app.post('/editBudget',async (req, res)=>{
         console.log("Datos para el update -->", req.body);
         let budget = req.body;
@@ -80,9 +61,6 @@ module.exports = (app) => {
         result = await budgetController.updateBudget(budget);
         console.log("resultado del update", result);
         res.render('editBudget',{
-                login: true,
-                name: req.session.name,
-                rol: req.session.rol,
                 alert: true,
                 alertTitle: "Actualizado",
                 alertMessage: "El presupuesto ha sido actualizado",
@@ -94,9 +72,6 @@ module.exports = (app) => {
                
             } catch (error) {
                 res.render('editBudget',{results:result,
-                    login: true,
-                    name: req.session.name,
-                    rol: req.session.rol,
                     alert: true,
                     alertTitle: "Error",
                     alertMessage: "Ha ocurrido un error, intentelo de nuevo",
@@ -107,31 +82,14 @@ module.exports = (app) => {
             });
             }
         });
-    app.get('/registerBudget', (req,res)=>{
-        res.render('registerBudget',{
-        login: true,
-        name: req.session.name,
-        rol: req.session.rol});
 
+    app.get('/registerBudget', (req,res)=>{
+        res.render('registerBudget',{ });
     });
 
     app.get('/newBudget', async (req,res)=>{
-        if (req.session.loggedin) {
+       
         let response = await budgetController.getBudgetTable();
-        res.render('newBudget',{
-        login: true,
-        name: req.session.name,
-        rol: req.session.rol,
-        response:response
-    });
-        }else{
-            
-                res.render('newBudget',{
-                login: false,
-                name: req.session.name,
-                rol: req.session.rol});
-                    
-        }
-
-    });
+        res.render('newBudget',{response:response});
+        });           
 }
