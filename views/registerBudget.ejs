@@ -51,16 +51,32 @@
             <!-- FLUJO DE EFECTIVO -->
             <h4 class="md-6 flex-xl-row-reverse">Flujo de efectivo</h4>
             <div class="flex-xl-row-reverse">
+              <table class="table flex-xl-wrap">
+                <thead>
+                <tr>
+                  <th scope="col" style="align-items: center;">FECHA</th>
+                  <th scope="col" style="align-items: center;">INGRESOS</th>
+                  <th scope="col" style="align-items: center;">EGRESOS</th>
+                  <th scope="col" style="align-items: center;">TOTAL</th>
+                  <th scope="col" style="align-items: center;">ACUMULADO</th>
+                  <th scope="col" style="align-items: center;">ACCIONES</th>
+                  
+                </tr>
+              </thead>
+              <tbody id="flowsAdded">
               
+                
+                
+              </tbody>
+
+
+              </table>
                 <table class="table flex-xl-wrap" id="flow_table">
                     <thead>
                       <tr>
-                        <th scope="col" style="align-items: center;">MES</th>
+                        <th scope="col" style="align-items: center;">FECHA</th>
                         <th scope="col" style="align-items: center;">INGRESOS</th>
-                        <th scope="col" style="align-items: center;">EGRESOS</th>
-                        <th scope="col" style="align-items: center;">TOTAL</th>
-                        <th scope="col" style="align-items: center;">ACUMULADO</th>
-                        <th scope="col" style="align-items: center;">ACCIONES</th>
+                        <th scope="col" style="align-items: center;">EGRESOS</th>                    
                       </tr>
                       
                     </thead>
@@ -68,33 +84,19 @@
                       
                       <tr>
                         
-                        <td style="text-align: center;"><select id="fecha_flow" name="month" required>
-                          
-                          <option>Enero</option>
-                          <option>Febrero</option>
-                          <option>Marzo</option>
-                          <option>Abril</option>
-                          <option>Mayo</option>
-                          <option>Junio</option>
-                          <option>Julio</option>
-                          <option>Agosto</option>
-                          <option>Septiembre</option>
-                          <option>Octubre</option>
-                          <option>Noviembre</option>
-                          <option>Diciembre</option>
-                        </select></td>
                         
-                        <td style="text-align: center;"><input required type="number" id="ingreso_flow" step='0.01' placeholder="Ingreso"></td>
-                        <td style="text-align: center;"><input required type="number" id="egreso_flow" step='0.01' placeholder="Egreso"></td>
-                       <!-- <td style="text-align: center;"><input type="number"  disabled placeholder="TOTAL"></td>
-                        <td style="text-align: center;"><input type="number"  disabled placeholder="Acumulado"></td>-->
+                        <td style="text-align: center;"><input type="date" 
+                          min="2021-01-01" max="2022-12-31"
+                          id="dateFlow" name="dateFlow" required></td>
+                        
+                        <td style="text-align: center;"><input required type="number" id="ingressFlow" step='0.01' placeholder="Ingreso"></td>
+                        <td style="text-align: center;"><input required type="number" id="egressFlow" step='0.01' placeholder="Egreso"></td>
                         <td style="text-align: center;">
-                            <button type="button" id="add_flow" class="btn btn-outline-info">Agregar</button>
-                        <!--<a href="/deleteFlow" class="btn btn-outline-danger btn-borrar">Borrar</a>-->
-                        </td>
+                            <button onclick="createFlow()" type="button" id="add_flow" class="btn btn-outline-info">Agregar al flujo</button>
+                        </td>  
                         
-                        <div id="adicionados"></div>
                       </tr>
+                      
                     </tbody>
                   </table>
                 
